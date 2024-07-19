@@ -21,7 +21,7 @@ let model;
 // Load a glTF resource
 loader.load(
 	// resource URL
-	'/models/modifiers.gltf',
+	'/models/modifiers.glb',
 	// called when the resource is loaded
 	function(gltf) {
 		gltf.scene.traverse((child) => {

@@ -1,0 +1,26 @@
+typealias SubDomain = String(matches(Regex(#"[a-z0-9\-]+"#)))
+hidden branch: SubDomain = read("prop:branch")
+hidden domain = if (branch == "main") "drinkpola.com" else "\(branch).drinkpola.com"
+
+services {
+	web {
+		build {
+			context = "."
+			dockerfile = "Dockerfile"
+		}
+		networks { 
+			"proxy"
+		}
+		labels {
+			caddy = domain
+			`caddy.reverse_proxy` = "{{upstreams 80}}"
+		}
+	}
+}
+
+networks {
+	proxy {
+		name = "cicd-caddy"
+		`external` = true
+	}
+}

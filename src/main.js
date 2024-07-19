@@ -3,8 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 1000);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -16,15 +15,23 @@ scene.add(hemiLight);
 // Instantiate a loader
 const loader = new GLTFLoader();
 
+const newMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+
+let model;
 // Load a glTF resource
 loader.load(
 	// resource URL
-	'/models/scene.glb',
+	'/models/modifiers.gltf',
 	// called when the resource is loaded
 	function(gltf) {
-
-		scene.add(gltf.scene);
-		renderer.render(scene, camera);
+		gltf.scene.traverse((child) => {
+			if (child.isMesh) {
+				child.material = newMaterial;
+			}
+		});
+		model = gltf.scene;
+		scene.add(model);
+		console.log(gltf.cameras.length);
 		gltf.animations; // Array<THREE.AnimationClip>
 		gltf.scene; // THREE.Group
 		gltf.scenes; // Array<THREE.Group>
@@ -44,10 +51,15 @@ loader.load(
 	}
 );
 
-camera.position.z = 1;
+camera.position.z = 0.5;
 
 const animate = function() {
 	requestAnimationFrame(animate);
+	if (model) {
+		// model.rotation.x += 0.01; // Rotate around X axis
+		model.rotation.y += 0.01; // Rotate around Y axis
+		//	model.rotation.z += 0.01; // Rotate around Z axis
+	}
 	renderer.render(scene, camera);
 };
 

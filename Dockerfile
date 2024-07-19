@@ -15,4 +15,4 @@ FROM pierrezemb/gostatic AS runner
 
 COPY --from=builder /app/dist /srv/http
 
-CMD ["-enable-health", "-enable-logging", "-fallback", "index.html"]
+CMD ["-enable-health", "-enable-logging", "-port", "80", "-fallback", "index.html"]

@@ -12,6 +12,7 @@ THREE.DefaultLoadingManager.onStart = function(url, itemsLoaded, itemsTotal) {
 
 THREE.DefaultLoadingManager.onLoad = function() {
 	loaderLabel.innerText = "100%";
+	loaderLabel.remove();
 	console.log('Loading Complete!');
 };
 

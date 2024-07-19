@@ -6,7 +6,7 @@
   },
   "staticFiles": {
     "staticPath": "assets",
-    "watcherGlob": "**"
+    "watcherGlob": "**/*"
   },
   "devDependencies": {
     "parcel": "^2.12.0",

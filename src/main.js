@@ -15,7 +15,7 @@ let cameras = [], mixer;
 // Load a glTF resource
 loader.load(
 	// resource URL
-	'/models/scene.gltf',
+	'/models/animate.glb',
 	// called when the resource is loaded
 	function(gltf) {
 		gltf.animations; // Array<THREE.AnimationClip>

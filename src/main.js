@@ -24,7 +24,6 @@ loader.load(
 		gltf.cameras; // Array<THREE.Camera>
 		gltf.asset; // Object
 		console.log({ animations: gltf.animations.length });
-		animations = gltf.animations;
 		mixer = new THREE.AnimationMixer(gltf.scene);
 		gltf.animations.forEach((clip) => mixer.clipAction(clip).play());
 		console.log({ cameras: gltf.cameras.length });

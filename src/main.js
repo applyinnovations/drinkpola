@@ -2,6 +2,29 @@ import * as THREE from 'three';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
+const loaderLabel = document.getElementById("loader-label");
+
+
+THREE.DefaultLoadingManager.onStart = function(url, itemsLoaded, itemsTotal) {
+	loaderLabel.innerText = "0%";
+	console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+};
+
+THREE.DefaultLoadingManager.onLoad = function() {
+	loaderLabel.innerText = "100%";
+	console.log('Loading Complete!');
+};
+
+THREE.DefaultLoadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
+	loaderLabel.innerText = `${itemsLoaded / itemsTotal}%`;
+	console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+};
+
+THREE.DefaultLoadingManager.onError = function(url) {
+	loaderLabel.innerText = "ERROR";
+	console.log('There was an error loading ' + url);
+};
+
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -30,14 +53,6 @@ loader.load(
 		cameras = gltf.cameras;
 		scene.add(gltf.scene);
 	},
-	// called while loading is progressing
-	function(xhr) {
-		console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-	},
-	// called when loading has errors
-	function(error) {
-		console.error(error);
-	}
 );
 
 const animate = function() {
